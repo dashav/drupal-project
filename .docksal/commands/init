@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+## Docksal powered, composer-based installer for latest Drupal 8.
+##
+## Steps:
+## 1. Run composer install
+## 2. Run drush site-install
+##
+## Usage: fin init
+
+# Abort if anything fails
+set -e
+
+cd ${PROJECT_ROOT}
+echo "Step 1. Starting composer install...."
+fin exec "composer install"
+
+cd ${DOCROOT}
+echo "Step 2. Starting drush site-install...."
+fin exec "drush site-install -y --db-url=mysql://user:user@db/default"
+
+# Run Drush status to verify site install.
+fin drush status
